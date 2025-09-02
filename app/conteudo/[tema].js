@@ -1,0 +1,1 @@
+//página dinâmica para cada tema
