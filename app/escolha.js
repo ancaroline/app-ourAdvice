@@ -1,7 +1,7 @@
 import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
 import  { useRouter }  from "expo-router";
 
-const opcoes = ["Paz", "Amor", "Consolação", "Perdão", "Entendimento", "Compaixão", "Fraternidade"];
+const opcoes = ["Paz", "Amor", "Perdão", "Consolação", "Entendimento", "Compaixão", "Fraternidade"];
 
 export default function Escolha() {
     const router = useRouter();
@@ -44,15 +44,17 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     botao: {
-        backgroundColor: "#4CAF50",
+        backgroundColor: "#6ba86dff",
         paddingVertical: 15,
         marginVertical: 8,
+        paddingHorizontal: 30,
         borderRadius: 12,
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2},
         shadowOpacity: 0.1,
         shadowRadius: 4,
-        elevation: 2 // sombra para Android
+        elevation: 2, // sombra para Android,
+        alignSelf: "center"
     },
     botaoTexto: {
         color: "#fff",

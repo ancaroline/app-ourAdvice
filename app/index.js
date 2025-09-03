@@ -26,9 +26,46 @@ export default function Home() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, justifyContent: "center", alignItems: "center", padding: 20 },
-  frase: { fontSize: 20, textAlign: "center", marginBottom: 40 },
-  botao: { backgroundColor: "#4CAF50", paddingVertical: 15, paddingHorizontal: 40, borderRadius: 10 },
-  botaoTexto: { color: "#fff", fontSize: 18 }
+  container: {
+    flex: 1,
+    backgroundColor: "#FAFAFA",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: 20,
+  },
+  fraseBox: {
+    marginBottom: 40,
+    padding: 20,
+    borderRadius: 16,
+    backgroundColor: "#fff",
+    shadowColor: "#000",
+    shadowOpacity: 0.05,
+    shadowRadius: 10,
+    elevation: 3,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  frase: {
+    fontSize: 18,
+    fontStyle: "italic",
+    color: "#333",
+    textAlign: "center",
+    lineHeight: 26,
+  },
+  button: {
+    paddingVertical: 14,
+    paddingHorizontal: 30,
+    backgroundColor: "#4A90E2",
+    borderRadius: 12,
+    shadowColor: "#000",
+    shadowOpacity: 0.1,
+    shadowRadius: 8,
+    elevation: 3,
+  },
+  buttonText: {
+    fontSize: 16,
+    color: "#fff",
+    fontWeight: "600",
+  },
 });
 
