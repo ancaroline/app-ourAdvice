@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
         width: "100%",
     },
     botao: {
-        backgroundColor: "#6ba86dff",
+        backgroundColor: "#8bc28dff",
         paddingVertical: 15,
         marginVertical: 8,
         paddingHorizontal: 30,
