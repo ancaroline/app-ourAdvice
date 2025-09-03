@@ -11,7 +11,7 @@ export default function Home() {
   useEffect(() => {
     const timer = setInterval(() => {
       setIndex((prev) => (prev + 1) % frases.length);
-    }, 60000); // Atualiza a cada 1 minuto
+    }, 15000); // 15 segundos
     return () => clearInterval(timer);
   }, []);
 

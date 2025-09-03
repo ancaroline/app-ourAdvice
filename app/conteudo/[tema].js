@@ -10,6 +10,20 @@ export default function Conteudo() {
 
   const [indexVers, setIndexVers] = useState(0);
   const [indexCons, setIndexCons] = useState(0);
+  // Funções de navegação para versículos
+  const proximoVers = () =>
+    setIndexVers((prev) => (prev + 1) % data.versiculos.length);
+  const anteriorVers = () =>
+    setIndexVers((prev) =>
+        prev === 0 ? data.versiculos.length - 1 : prev - 1
+    );
+  // Funções de navegação para conselhos
+  const proximoCons = () =>
+    setIndexCons((prev) => (prev + 1) % data.conselhos.length);
+  const anteriorCons = () =>
+    setIndexCons((prev) =>
+        prev === 0 ? data.conselhos.length - 1 : prev - 1
+    );
 
 
   return (
@@ -21,13 +35,19 @@ export default function Conteudo() {
         {data.versiculos.length > 0 ? (
           <>
             <Text style={styles.texto}>{data.versiculos[indexVers]}</Text>
-            <TouchableOpacity
-              style={styles.botao}
-              onPress={() => setIndexVers((prev) => (prev + 1) % data.versiculos.length)}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.botaoTexto}>Próximo Versículo</Text>
-            </TouchableOpacity>
+            
+            <View style={styles.botoesContainer}>
+                <TouchableOpacity style={styles.botao} onPress={anteriorVers}>
+                    <Text style={styles.botaoTexto}>Anterior</Text>
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.botao} onPress={proximoVers}>
+                    <Text style={styles.botaoTexto}>Próximo</Text>
+                </TouchableOpacity>
+            </View>
+
+            <Text style={styles.indicador}>
+                {indexVers + 1} de {data.versiculos.length}
+            </Text>
           </>
         ) : (
           <Text style={styles.alerta}>Nenhum versículo disponível.</Text>
@@ -36,14 +56,28 @@ export default function Conteudo() {
         {/* Conselho */}
         {data.conselhos.length > 0 ? (
           <>
-            <Text style={styles.texto}>{data.conselhos[indexCons]}</Text>
-            <TouchableOpacity
-              style={[styles.botao, styles.botaoSecundario]}
-              onPress={() => setIndexCons((prev) => (prev + 1) % data.conselhos.length)}
-              activeOpacity={0.7}
-            >
-              <Text style={styles.botaoTexto}>Próximo Conselho</Text>
-            </TouchableOpacity>
+            <Text style={[styles.texto, { marginTop: 30 }]}>
+              {data.conselhos[indexCons]}
+            </Text>
+
+            <View style={styles.botoesContainer}>
+              <TouchableOpacity
+                style={[styles.botao, styles.botaoSecundario]}
+                onPress={anteriorCons}
+              >
+                <Text style={styles.botaoTexto}>Anterior</Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                style={[styles.botao, styles.botaoSecundario]}
+                onPress={proximoCons}
+              >
+                <Text style={styles.botaoTexto}>Próximo</Text>
+              </TouchableOpacity>
+            </View>
+
+            <Text style={styles.indicador}>
+              {indexCons + 1} de {data.conselhos.length}
+            </Text>
           </>
         ) : (
           <Text style={styles.alerta}>Nenhum conselho disponível.</Text>
@@ -79,6 +113,14 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     lineHeight: 26
   },
+
+  botoesContainer: {
+    flexDirection: "row",
+    justifyContent: "center",
+    gap: 10,
+    marginVertical: 10,
+  },
+
   botao: {
     backgroundColor: "#6ba86dff",
     paddingVertical: 14,
@@ -105,5 +147,10 @@ const styles = StyleSheet.create({
     color: "#888",
     textAlign: "center",
     marginVertical: 20
-  }
+  },
+    indicador: {
+    fontSize: 14,
+    color: "#888",
+    marginTop: 5,
+  },
 });

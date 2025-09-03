@@ -1,11 +1,11 @@
 export const conteudo = {
     Paz: {
         versiculos: [
-            "Test",
+            "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
             "Test 2"
         ],
         conselhos: [
-            "Test cons",
+            "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
             "Test cons 2"
         ],
     },
