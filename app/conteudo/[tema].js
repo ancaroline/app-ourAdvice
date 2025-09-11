@@ -54,9 +54,10 @@ export default function Conteudo() {
         )}
 
         {/* Conselho */}
+        <Text style={styles.titulo}>Conselhos</Text>
         {data.conselhos.length > 0 ? (
           <>
-            <Text style={[styles.texto, { marginTop: 30 }]}>
+            <Text style={[styles.texto, { marginTop: 10 }]}>
               {data.conselhos[indexCons]}
             </Text>
 
@@ -104,8 +105,10 @@ const styles = StyleSheet.create({
     fontWeight: "600",
     color: "#333",
     marginBottom: 30,
+    marginTop: 30,
     textAlign: "center"
   },
+
   texto: {
     fontSize: 18,
     color: "#444",
@@ -151,6 +154,6 @@ const styles = StyleSheet.create({
     indicador: {
     fontSize: 14,
     color: "#888",
-    marginTop: 5,
+    marginTop: -20,
   },
 });

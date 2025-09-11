@@ -11,10 +11,13 @@ export const conteudo = {
     },
     Amor: {
         versiculos: [
+            "Bem-aventurados os que têm um coração de pobre, porque deles é o Reino dos céus! (Mateus, 5:3)",
+            "Bem-aventurados os puros de coração, porque verão Deus! (Mateus, 5:8)",
 
         ],
         conselhos: [
-
+            "Mateus, capítulo 5, escreveu sobre as recomendações de Jesus. 'Bem-aventurados os que têm um coração pobre'. Esta frase nos aconselha sobre a humildade, onde devemos nos soltar das amarras da vaidade, do orgulho. Não ter em nosso coração sentimentos de superioridade. Devemos lembrar que somos filhos de Deus, logo somos todos irmãos.",
+            ""
         ]
     },
     Perdao: {

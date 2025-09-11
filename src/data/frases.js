@@ -1,5 +1,5 @@
 export const frases = [
-    "Lorem ipsum is placeholder text commonly used in the graphic, print, and publishing industries for previewing layouts and visual mockups.",
+    "Deus nunca desistirá de você.",
             
     "Test 2"
 ];

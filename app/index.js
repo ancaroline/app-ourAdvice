@@ -53,9 +53,11 @@ return (
       <Animated.View
         style={{ opacity: fadeAnim, transform: [{ scale: scaleAnim }] }}
       >
-        <Text style={styles.aspasp}>“</Text>
-        <Text style={styles.frase}>{frases[index]}</Text>
-        <Text style={styles.aspasp}>”</Text>
+        <Text style={styles.frase}>
+          <Text style={styles.aspasp}>“</Text>
+          {frases[index]}
+          <Text style={styles.aspasp}>”</Text>
+        </Text>
       </Animated.View>
     </View>
 
