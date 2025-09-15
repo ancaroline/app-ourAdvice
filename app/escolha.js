@@ -10,35 +10,124 @@ export default function Escolha() {
     const router = useRouter();
     // Estado do menu lateral
     const [menuAberto, setMenuAberto] = useState(false);
-    const slideAnim = useRef(new Animated.Value(-width * 0.7)).current;
+
+    // Animação do ícone
+    const menuAnim = useRef(new Animated.Value(-width * 0.7)).current; // menu lateral  
+    const iconAnim = useRef(new Animated.Value(0)).current; // ícone animação
 
     const toggleMenu = () => {
         if (menuAberto) {
-            Animated.timing(slideAnim, {
-                toValue: -width * 0.7,
-                duration: 300,
-                useNativeDriver: false,
-            }).start(() => setMenuAberto(false));
+            // Fecha o menu
+            Animated.parallel([
+                Animated.timing(menuAnim, {
+                    toValue: -width * 0.7, // volta para fora da tela
+                    duration: 300,
+                    useNativeDriver: false,
+                }),
+                Animated.timing(iconAnim, {
+                    toValue: 0, // volta ao estado inicial do ícone
+                    duration: 300,
+                    useNativeDriver: true,
+                }),
+            ]).start(() => setMenuAberto(false));
         } else {
+            // Abre o menu
             setMenuAberto(true);
-            Animated.timing(slideAnim, {
-                toValue: 0,
-                duration: 300,
-                useNativeDriver: false,
-            }).start();
+            Animated.parallel([
+                Animated.timing(menuAnim, {
+                    toValue: 0,
+                    duration: 300,
+                    useNativeDriver: false,
+                }),
+                Animated.timing(iconAnim, {
+                    toValue: 1,
+                    duration: 300,
+                    useNativeDriver: true,
+                }),
+            ]).start();
         }
     };
+
+    // Interpolações para girar e escalar o ícone
+    {/*const rotate = iconAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: ["0deg", "180deg"],
+    });
+    const scale = iconAnim.interpolate({
+        inputRange: [0, 1],
+        outputRange: [1, 1.2],
+    });
+
+    */}
 
     return (
         <View style={styles.container}>
 
-            {/* Ícone do menu */}
+            {/* Ícone do menu animado */}
             <TouchableOpacity style={styles.menuIcon} onPress={toggleMenu}>
-                <Ionicons name="menu" size={28} color="#333" />
+                {/*Linha 1 */}
+                <Animated.View
+                    style={[
+                        styles.linha,
+                        {
+                            transform: [
+                                {
+                                    rotateZ: iconAnim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: ["0deg", "45deg"],
+                                    }),
+                                },
+                                {
+                                    translateY: iconAnim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, 15],
+                                    }),
+                                },
+                            ],
+                        },
+                    ]}
+                />
+                {/* Linha 2 */}
+                <Animated.View
+                    style={[
+                        styles.linha,
+                        {
+                            opacity: iconAnim.interpolate({
+                                inputRange: [0, 1],
+                                outputRange: [1, 0],
+                            }),
+                        },
+                    ]}
+                />
+                {/* Linha 3 */}
+                <Animated.View
+                    style={[
+                        styles.linha,
+                        {
+                            transform: [
+                                {
+                                    rotateZ: iconAnim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: ["0deg", "-45deg"],
+                                    }),
+                                },
+                                {
+                                    translateY: iconAnim.interpolate({
+                                        inputRange: [0, 1],
+                                        outputRange: [0, -15],
+                                    }),
+                                },
+                            ],
+                        },
+                    ]}
+                />
             </TouchableOpacity>
             
-            {/* Conteúdo principal */}
+                            {/* Conteúdo principal */}
+            {/* Título */}
             <Text style={styles.titulo}>O que você deseja?</Text>
+            
+            {/* Lista de opções */}
             <View style={styles.lista}>
                 {opcoes.map((item, i) => (
                     <TouchableOpacity
@@ -59,7 +148,7 @@ export default function Escolha() {
                     activeOpacity={1}
                     onPress={toggleMenu}
                 >
-                    <Animated.View style={[styles.menu, { left: slideAnim }]} >
+                    <Animated.View style={[styles.menu, { left: menuAnim }]} >
                         <Text style={styles.menuTitulo}>Menu</Text>
                         <TouchableOpacity style={styles.menuItem}>
                             <Text style={styles.menuTexto}>✨ Função 1</Text>
@@ -155,5 +244,12 @@ const styles = StyleSheet.create({
     top: 50,
     left: 20,
     zIndex: 10,
+  },
+  linha: {
+    width: 30,
+    height: 3,
+    backgroundColor: "#333",
+    marginVertical: 4,
+    borderRadius: 2,
   },
 });
