@@ -11,9 +11,10 @@ export default function Escolha() {
     // Estado do menu lateral
     const [menuAberto, setMenuAberto] = useState(false);
 
-    // Animação do ícone
+    // Animações
     const menuAnim = useRef(new Animated.Value(-width * 0.7)).current; // menu lateral  
     const iconAnim = useRef(new Animated.Value(0)).current; // ícone animação
+    const fadeAnim = useRef(new Animated.Value(0)).current; // fade das opções do menu
 
     const toggleMenu = () => {
         if (menuAberto) {
@@ -44,21 +45,16 @@ export default function Escolha() {
                     duration: 300,
                     useNativeDriver: true,
                 }),
-            ]).start();
+            ]).start(() => {
+                // Fade das opções
+                Animated.timing(fadeAnim, {
+                    toValue: 1,
+                    duration: 300,
+                    useNativeDriver: true,
+                }).start();
+            })
         }
     };
-
-    // Interpolações para girar e escalar o ícone
-    {/*const rotate = iconAnim.interpolate({
-        inputRange: [0, 1],
-        outputRange: ["0deg", "180deg"],
-    });
-    const scale = iconAnim.interpolate({
-        inputRange: [0, 1],
-        outputRange: [1, 1.2],
-    });
-
-    */}
 
     return (
         <View style={styles.container}>
@@ -149,16 +145,20 @@ export default function Escolha() {
                     onPress={toggleMenu}
                 >
                     <Animated.View style={[styles.menu, { left: menuAnim }]} >
-                        <Text style={styles.menuTitulo}>Menu</Text>
-                        <TouchableOpacity style={styles.menuItem}>
-                            <Text style={styles.menuTexto}>✨ Função 1</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItem}>
-                            <Text style={styles.menuTexto}>📘 Função 2</Text>
-                        </TouchableOpacity>
-                        <TouchableOpacity style={styles.menuItem}>
-                            <Text style={styles.menuTexto}>⚙️ Função 3</Text>
-                        </TouchableOpacity>
+                        <Text style={styles.menuTitulo}>OurAdvice</Text>
+
+                        <Animated.View style={{ opacity: fadeAnim }}>
+                            <TouchableOpacity style={styles.menuItem}>
+                                <Text style={styles.menuTexto}>✨ Favoritos</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.menuItem}>
+                                <Text style={styles.menuTexto}>📘 Livros</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity style={styles.menuItem}>
+                                <Text style={styles.menuTexto}>⚙️ Configurações</Text>
+                            </TouchableOpacity>
+                        </Animated.View>
+
                     </Animated.View>  
                 </TouchableOpacity>
                     
@@ -215,7 +215,7 @@ const styles = StyleSheet.create({
     top: 0,
     bottom: 0,
     width: width * 0.7,
-    backgroundColor: "#fff",
+    backgroundColor: "#6f8f7bff",
     padding: 20,
     shadowColor: "#000",
     shadowOpacity: 0.1,
@@ -227,16 +227,22 @@ const styles = StyleSheet.create({
   menuTitulo: {
     fontSize: 20,
     fontWeight: "bold",
-    color: "#333",
-    marginBottom: 20,
+    color: "#f0f0f0",
+    marginBottom: 30,
+    marginTop: 100,
   },
   menuItem: {
-    paddingVertical: 14,
-    borderBottomWidth: 1,
-    borderBottomColor: "#f0f0f0",
+    backgroundColor: "#f0f0f0",
+    paddingHorizontal: 30,
+    borderRadius: 10,
+    paddingVertical: 15,
+    marginLeft: 10,
+    marginRight: 10,
+    //borderBottomWidth: 1,
+    //borderBottomColor: "#f0f0f0",
   },
   menuTexto: {
-    fontSize: 16,
+    fontSize: 18,
     color: "#444",
   },
   menuIcon: {
@@ -246,8 +252,8 @@ const styles = StyleSheet.create({
     zIndex: 10,
   },
   linha: {
-    width: 30,
-    height: 3,
+    width: 25,
+    height: 2,
     backgroundColor: "#333",
     marginVertical: 4,
     borderRadius: 2,
