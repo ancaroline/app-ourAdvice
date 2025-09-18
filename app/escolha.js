@@ -1,11 +1,63 @@
 import React, { useState, useRef } from "react";
-import { View, Text, TouchableOpacity, StyleSheet, Animated, Dimensions } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Animated, Dimensions, Pressable } from "react-native";
 import  { useRouter }  from "expo-router";
 import { Ionicons } from "@expo/vector-icons";
 
 const opcoes = ["Paz", "Amor", "Perdão", "Consolação", "Entendimento", "Compaixão", "Fraternidade"];
 const { width } = Dimensions.get("window");
 
+
+// Card isolado
+function Card({ title, onPress }) {
+  const scaleAnim = useRef(new Animated.Value(1)).current;
+  const bgAnim = useRef(new Animated.Value(0)).current;
+
+  const handlePressIn = () => {
+    Animated.parallel([
+      Animated.spring(scaleAnim, {
+        toValue: 0.97,
+        useNativeDriver: false,
+      }),
+      Animated.timing(bgAnim, {
+        toValue: 1,
+        duration: 200,
+        useNativeDriver: false,
+      }),
+    ]).start();
+  };
+
+  const handlePressOut = () => {
+    Animated.parallel([
+      Animated.spring(scaleAnim, {
+        toValue: 1,
+        useNativeDriver: false,
+      }),
+      Animated.timing(bgAnim, {
+        toValue: 0,
+        duration: 400,
+        useNativeDriver: false,
+      }),
+    ]).start(() => onPress && onPress());
+  };
+
+  const backgroundColor = bgAnim.interpolate({
+    inputRange: [0, 1],
+    outputRange: ["#fff", "#e8b7f0"],
+  });
+
+  return (
+    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut}>
+      <Animated.View
+        style={[
+          styles.opcaoCard,
+          { transform: [{ scale: scaleAnim }], backgroundColor },
+        ]}
+      >
+        <Text style={styles.opcaoTexto}>{title}</Text>
+      </Animated.View>
+    </Pressable>
+  );
+}
 export default function Escolha() {
     const router = useRouter();
     // Estado do menu lateral
@@ -15,6 +67,7 @@ export default function Escolha() {
     const menuAnim = useRef(new Animated.Value(-width * 0.7)).current; // menu lateral  
     const iconAnim = useRef(new Animated.Value(0)).current; // ícone animação
     const fadeAnim = useRef(new Animated.Value(0)).current; // fade das opções do menu
+
 
     const toggleMenu = () => {
         if (menuAberto) {
@@ -28,7 +81,7 @@ export default function Escolha() {
                 Animated.timing(iconAnim, {
                     toValue: 0, // volta ao estado inicial do ícone
                     duration: 300,
-                    useNativeDriver: true,
+                    useNativeDriver: false,
                 }),
             ]).start(() => setMenuAberto(false));
         } else {
@@ -43,14 +96,14 @@ export default function Escolha() {
                 Animated.timing(iconAnim, {
                     toValue: 1,
                     duration: 300,
-                    useNativeDriver: true,
+                    useNativeDriver: false,
                 }),
             ]).start(() => {
                 // Fade das opções
                 Animated.timing(fadeAnim, {
                     toValue: 1,
                     duration: 300,
-                    useNativeDriver: true,
+                    useNativeDriver: false,
                 }).start();
             })
         }
@@ -126,14 +179,11 @@ export default function Escolha() {
             {/* Lista de opções */}
             <View style={styles.lista}>
                 {opcoes.map((item, i) => (
-                    <TouchableOpacity
-                    key={i}
-                    style={styles.opcaoCard}
-                    onPress={() => router.push(`/conteudo/${item}`)}
-                    activeOpacity = {0.7} // efeito visual ao tocar
-                    >
-                        <Text style={styles.opcaoTexto}>{item}</Text>
-                    </TouchableOpacity>
+                    <Card
+                        key={i}
+                        title={item}
+                        onPress={() => router.push(`/conteudo/${item}`)}
+                    />
                 ))}
             </View>
 
@@ -189,28 +239,30 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "space-between",
+        alignItems: "flex-start",
         marginTop: 20,
     },
     
     opcaoCard: {
         backgroundColor: "#fff",
-        paddingVertical: 18,
-        paddingHorizontal: 20,
+        padding: 15,
         borderRadius: 12,
         marginVertical: 10,
         shadowColor: "#000",
-        //shadowOffset: { width: 0, height: 2},
         shadowOpacity: 0.05,
         shadowRadius: 6,
-        elevation: 2, // sombra para Android,
-        alignSelf: "center",
-        width: "48%", //garante dois por linha
+        elevation: 2,
+        width: "48%", // dois por linha
+        minHeight: 130, // garante um tamanho mínimo
+        justifyContent: "center",
+        alignItems: "center",
     },
     opcaoTexto: {
         color: "#333",
         fontSize: 18,
         fontWeight: "500",
-        textAlign: "center"
+        textAlign: "center",
+        // removi flexShrink e flexWrap
     },
     overlay: {
         ...StyleSheet.absoluteFillObject,
