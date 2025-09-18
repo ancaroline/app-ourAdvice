@@ -46,16 +46,30 @@ function Card({ title, onPress }) {
   });
 
   return (
-    <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut}>
-      <Animated.View
-        style={[
-          styles.opcaoCard,
-          { transform: [{ scale: scaleAnim }], backgroundColor },
-        ]}
-      >
-        <Text style={styles.opcaoTexto}>{title}</Text>
-      </Animated.View>
-    </Pressable>
+    <View style={{ width: "48%", marginVertical: 10 }}>
+      <Pressable onPressIn={handlePressIn} onPressOut={handlePressOut}>
+        <Animated.View
+          style={{
+            transform: [{ scale: scaleAnim }],
+            backgroundColor,
+            borderRadius: 12,
+            paddingVertical: 18,
+            paddingHorizontal: 20,
+            minHeight: 110, // garante altura uniforme
+            alignItems: "center",
+            justifyContent: "center",
+            shadowColor: "#000",
+            shadowOpacity: 0.05,
+            shadowRadius: 6,
+            elevation: 2,
+          }}
+        >
+          <Text style={{ color: "#333", fontSize: 18, fontWeight: "500", textAlign: "center" }}>
+            {title}
+          </Text>
+        </Animated.View>
+      </Pressable>
+    </View>
   );
 }
 export default function Escolha() {
