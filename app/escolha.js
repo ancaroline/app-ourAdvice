@@ -128,11 +128,11 @@ export default function Escolha() {
                 {opcoes.map((item, i) => (
                     <TouchableOpacity
                     key={i}
-                    style={styles.botao}
+                    style={styles.opcaoCard}
                     onPress={() => router.push(`/conteudo/${item}`)}
                     activeOpacity = {0.7} // efeito visual ao tocar
                     >
-                        <Text style={styles.botaoTexto}>{item}</Text>
+                        <Text style={styles.opcaoTexto}>{item}</Text>
                     </TouchableOpacity>
                 ))}
             </View>
@@ -185,23 +185,29 @@ const styles = StyleSheet.create({
         marginBottom: 30
     },
     lista: {
-        width: "100%",
+        width: "95%",
+        flexDirection: "row",
+        flexWrap: "wrap",
+        justifyContent: "space-between",
+        marginTop: 20,
     },
-    botao: {
-        backgroundColor: "#8bc28dff",
-        paddingVertical: 15,
-        marginVertical: 8,
-        paddingHorizontal: 30,
+    
+    opcaoCard: {
+        backgroundColor: "#fff",
+        paddingVertical: 18,
+        paddingHorizontal: 20,
         borderRadius: 12,
+        marginVertical: 10,
         shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2},
-        shadowOpacity: 0.1,
-        shadowRadius: 4,
+        //shadowOffset: { width: 0, height: 2},
+        shadowOpacity: 0.05,
+        shadowRadius: 6,
         elevation: 2, // sombra para Android,
-        alignSelf: "center"
+        alignSelf: "center",
+        width: "48%", //garante dois por linha
     },
-    botaoTexto: {
-        color: "#fff",
+    opcaoTexto: {
+        color: "#333",
         fontSize: 18,
         fontWeight: "500",
         textAlign: "center"
@@ -232,18 +238,16 @@ const styles = StyleSheet.create({
     marginTop: 100,
   },
   menuItem: {
-    backgroundColor: "#f0f0f0",
-    paddingHorizontal: 30,
-    borderRadius: 10,
     paddingVertical: 15,
     marginLeft: 10,
     marginRight: 10,
-    //borderBottomWidth: 1,
-    //borderBottomColor: "#f0f0f0",
+    borderBottomWidth: 1,
+    borderBottomColor: "#f0f0f0",
   },
   menuTexto: {
     fontSize: 18,
-    color: "#444",
+    color: "#f0f0f0",
+    //color: "#444",
   },
   menuIcon: {
     position: "absolute",
